@@ -1,32 +1,37 @@
 'use strict';
 
 import React, {Component} from 'react';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
-import AddUser from './AddUser';
-import Users from './Users';
+import About from './About';
+import Home from './Home';
 
 export default class AppContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            users: [{
-                id: Date.now(),
-                name: 'John'
-            }]
-        }
-    }
-
-    addUser(user) {
-        this.setState({
-            users: this.state.users.concat({id: Date.now(), name: user.name})
-        })
     }
 
     render() {
         return <div>
-            <h2>Users App</h2>
-            <AddUser addUser={user => this.addUser(user)}/>
-            <Users users={this.state.users}/>
+            <h2>React JS Sample</h2>
+            <Router>
+                <div>
+                    <div className="row">
+                        <div className="col-sm">
+                            <Link to="/">Home</Link>
+                        </div>
+                        <div className="col-sm">
+                            <Link to="/about">About</Link>
+                        </div>
+                    </div>
+                    <Route exact path="/" render={props => {
+                        return <Home/>
+                    }}/>
+                    <Route path="/about" render={props => {
+                        return <About/>
+                    }}/>
+                </div>
+            </Router>
         </div>;
     }
 }
